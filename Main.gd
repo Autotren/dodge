@@ -5,7 +5,6 @@ var score
 
 func _ready():
 	randomize()
-	new_game()
 
 
 
