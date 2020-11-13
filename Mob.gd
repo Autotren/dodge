@@ -3,8 +3,8 @@ extends RigidBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export var min_speed = 150  # Minimum speed range.
-export var max_speed = 250  # Maximum speed range.
+export var min_speed = 100  # Minimum speed range.
+export var max_speed = 200  # Maximum speed range.
 
 
 # Called when the node enters the scene tree for the first time.
