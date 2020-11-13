@@ -55,3 +55,4 @@ func _on_MobTimer_timeout():
 	mob.linear_velocity = mob.linear_velocity.rotated(direction)
 
 func change_level():
+	pass
