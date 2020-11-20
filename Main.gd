@@ -1,7 +1,12 @@
 extends Node
 
+signal change_level
+
 export (PackedScene) var Mob
 var score
+var level
+var min_speed
+var max_speed
 
 func _ready():
 	randomize()
@@ -20,6 +25,7 @@ func game_over():
 	get_tree().call_group("mobs", "queue_free")
 	$Music.stop()
 	$DeathSound.play()
+	$LevelTimer.stop()
 
 func new_game():
 	score = 0
@@ -28,10 +34,14 @@ func new_game():
 	$HUD.update_score(score)
 	$HUD.show_message("Get Ready")
 	$Music.play()
+	level = 1
+	min_speed = 25
+	max_speed = 50
 
 func _on_StartTimer_timeout():
 	$MobTimer.start()
 	$ScoreTimer.start()
+	$LevelTimer.start()
 
 func _on_ScoreTimer_timeout():
 	score += 1
@@ -51,8 +61,17 @@ func _on_MobTimer_timeout():
 	direction += rand_range(-PI / 4, PI / 4)
 	mob.rotation = direction
 	# Set the velocity (speed & direction).
-	mob.linear_velocity = Vector2(rand_range(mob.min_speed, mob.max_speed), 0)
+	mob.linear_velocity = Vector2(rand_range(self.min_speed, self.max_speed), 0)
 	mob.linear_velocity = mob.linear_velocity.rotated(direction)
+	print("Mob speed: min = " + str(self.min_speed) + " max = " + str(self.max_speed))
 
-func change_level():
-	pass
+
+func _on_LevelTimer_timeout():
+	level = level + 1
+	min_speed = 25 * level
+	max_speed = 50 * level
+#	$LevelLabel.text = "Level " + str(level)
+	emit_signal("change_level")
+	$HUD.show_message("Changing Speed!")
+	get_tree().call_group("mobs", "queue_free")
+
