@@ -10,6 +10,19 @@ var max_speed
 
 func _ready():
 	randomize()
+	
+	print("Loading...")
+
+	var save_file = File.new()
+	if not save_file.file_exists("user://savefile.save"):
+		print("Aborting, no savefile")
+		return
+
+	save_file.open("user://savefile.save", File.READ)
+	Globals.highscore = save_file.get_line()
+	save_file.close()
+	$HUD.update_highscore()
+	#print("pepe vale " + str(Globals.pepe))
 
 
 
@@ -26,6 +39,15 @@ func game_over():
 	$Music.stop()
 	$DeathSound.play()
 	$LevelTimer.stop()
+	if score > int(Globals.highscore):
+		Globals.highscore = score
+		print("Saving...")
+		var save_file = File.new()
+		save_file.open("user://savefile.save", File.WRITE)
+		save_file.store_line(str(Globals.highscore))
+		save_file.close()
+	print("Highscore = " + str(Globals.highscore))
+	
 
 func new_game():
 	score = 0
@@ -63,7 +85,6 @@ func _on_MobTimer_timeout():
 	# Set the velocity (speed & direction).
 	mob.linear_velocity = Vector2(rand_range(self.min_speed, self.max_speed), 0)
 	mob.linear_velocity = mob.linear_velocity.rotated(direction)
-	print("Mob speed: min = " + str(self.min_speed) + " max = " + str(self.max_speed))
 
 
 func _on_LevelTimer_timeout():

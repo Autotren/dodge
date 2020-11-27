@@ -21,11 +21,9 @@ func _ready():
 #	pass
 
 func _on_change_level():
-	print("Cambiando nivel, Nivel: "+ str(get_parent().level))
 	min_speed = 25 * (get_parent().level)
 	max_speed = 50 * (get_parent().level)
-	#print("min_speed: "+ str(min_speed))
-	#print("max_speed: "+ str(max_speed))
+
 
 
 

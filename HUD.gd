@@ -3,6 +3,8 @@ extends CanvasLayer
 export var level = 1
 signal start_game
 
+func update_highscore():
+	$Highscore.text = "Highscore\n" + str(Globals.highscore)
 
 func show_message(text):
 	$Message.text = text
@@ -16,6 +18,7 @@ func show_game_over():
 	yield($MessageTimer, "timeout")
 	$Message.text = "Dodge the\nCreeps!"
 	$Message.show()
+	update_highscore()
 	# Make a one-shot timer and wait for it to finish.
 	yield(get_tree().create_timer(1), "timeout")
 	$StartButton.show()
