@@ -32,7 +32,6 @@ func _on_StartButton_pressed():
 	emit_signal("start_game")
 	level = 1
 	$LevelLabel.text = "Level " + str(level)
-	
 
 func _on_MessageTimer_timeout():
 	$Message.hide()
@@ -42,3 +41,10 @@ func _on_MessageTimer_timeout():
 
 func _on_LevelTimer_timeout():
 	pass # Replace with function body.
+
+
+func _on_CheckButton_toggled(button_pressed):
+	if !button_pressed:
+		$"Virtual joystick".hide()
+	else:
+		$"Virtual joystick".show()

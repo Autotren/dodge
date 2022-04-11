@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
 [ext_resource path="res://dodge_assets/fonts/Xolonium-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://joystick/virtual_joystick.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -23,7 +24,12 @@ font_data = ExtResource( 2 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
-level = null
+
+[node name="Virtual joystick" parent="." instance=ExtResource( 3 )]
+margin_left = 26.0
+margin_top = -664.0
+margin_right = 452.0
+margin_bottom = -36.0
 
 [node name="ScoreLabel" type="Label" parent="."]
 anchor_right = 1.0
@@ -91,5 +97,14 @@ align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CheckButton" type="CheckButton" parent="."]
+margin_left = 16.0
+margin_top = 11.0
+margin_right = 92.0
+margin_bottom = 51.0
+text = "Joystick"
+
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_MessageTimer_timeout"]
+[connection signal="toggled" from="CheckButton" to="." method="_on_CheckButton_toggled"]
